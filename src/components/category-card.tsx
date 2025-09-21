@@ -12,6 +12,7 @@ import {
 import Link from 'next/link';
 
 export function CategoryCard({
+  id,
   name,
   description,
   image,
@@ -42,7 +43,7 @@ export function CategoryCard({
           className="w-full active:scale-95"
           aria-label={`View products in ${name}`}
         >
-          <Link href="/products">View Products</Link>
+          <Link href={`/products/${id}`}>View Products</Link>
         </Button>
       </CardFooter>
     </Card>
