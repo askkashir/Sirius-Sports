@@ -1,14 +1,12 @@
 import type {Metadata} from 'next';
 import './globals.css';
-import {SidebarProvider, Sidebar, SidebarInset} from '@/components/ui/sidebar';
-import {SidebarNav} from '@/components/sidebar-nav';
-import {Header} from '@/components/header';
 import {Toaster} from '@/components/ui/toaster';
+import {Navbar} from '@/components/navbar';
+import {Footer} from '@/components/footer';
 
 export const metadata: Metadata = {
-  title: 'PeakDeploy',
-  description:
-    'Deploy your professional PeakWear React/Vite project to Firebase Hosting with enterprise-grade configuration.',
+  title: 'PeakWear',
+  description: 'Elevate Your Performance',
 };
 
 export default function RootLayout({
@@ -17,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -31,17 +29,11 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased">
-        <SidebarProvider>
-          <Sidebar>
-            <SidebarNav />
-          </Sidebar>
-          <SidebarInset>
-            <Header />
-            <main className="min-h-[calc(100vh-4rem)] p-4 lg:p-6">
-              {children}
-            </main>
-          </SidebarInset>
-        </SidebarProvider>
+        <Navbar />
+        <main className="container mx-auto max-w-[1200px] px-4">
+          {children}
+        </main>
+        <Footer />
         <Toaster />
       </body>
     </html>
