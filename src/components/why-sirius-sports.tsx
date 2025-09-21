@@ -1,3 +1,5 @@
+'use client';
+import {motion} from 'framer-motion';
 import {Award, Leaf, Rocket, Shield} from 'lucide-react';
 import {
   Card,
@@ -29,9 +31,33 @@ const features = [
   },
 ];
 
+const containerVariants = {
+  hidden: {opacity: 0},
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: {opacity: 0, y: 20},
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+};
+
 export function WhySiriusSports() {
   return (
-    <section className="bg-secondary/30 py-24 sm:py-32">
+    <motion.section
+      className="bg-secondary/30 py-24 sm:py-32"
+      initial="hidden"
+      whileInView="visible"
+      variants={containerVariants}
+      viewport={{once: true, amount: 0.2}}
+    >
       <div className="container mx-auto max-w-[1200px] px-4">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
@@ -43,29 +69,31 @@ export function WhySiriusSports() {
             your game, not your gear.
           </p>
         </div>
-        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <motion.div
+          className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4"
+          variants={containerVariants}
+        >
           {features.map(feature => (
-            <Card
-              key={feature.title}
-              className="transform text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-black/40"
-            >
-              <CardHeader className="items-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-secondary">
-                  {feature.icon}
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardTitle className="text-xl font-semibold">
-                  {feature.title}
-                </CardTitle>
-                <p className="mt-2 text-muted-foreground">
-                  {feature.description}
-                </p>
-              </CardContent>
-            </Card>
+            <motion.div key={feature.title} variants={cardVariants}>
+              <Card className="transform text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-black/40">
+                <CardHeader className="items-center">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-secondary">
+                    {feature.icon}
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <CardTitle className="text-xl font-semibold">
+                    {feature.title}
+                  </CardTitle>
+                  <p className="mt-2 text-muted-foreground">
+                    {feature.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
