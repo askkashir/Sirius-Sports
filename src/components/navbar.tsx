@@ -48,11 +48,14 @@ export function Navbar() {
           </Link>
         </div>
 
-        <div className="hidden md:flex">
+        <div className="hidden items-center justify-center gap-8 md:flex">
           {categoriesLink && (
-            <Button asChild>
-              <Link href={categoriesLink.href}>{categoriesLink.label}</Link>
-            </Button>
+            <Link
+              href={categoriesLink.href}
+              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+            >
+              {categoriesLink.label}
+            </Link>
           )}
         </div>
 
