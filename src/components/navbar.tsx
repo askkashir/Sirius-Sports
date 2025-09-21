@@ -27,18 +27,17 @@ export function Navbar() {
       )}
     >
       <div className="container mx-auto flex h-20 max-w-[1200px] items-center justify-between px-4">
-        <div className="flex items-center gap-6">
-          <Link
-            href="/"
-            className="flex items-center gap-2 transition-opacity hover:opacity-80"
-            aria-label="Sirius Sports home page"
-          >
-            <Mountain className="h-8 w-8 text-primary" />
-            <span className="hidden text-xl font-bold md:inline">
-              Sirius Sports
-            </span>
-          </Link>
-          <nav className="hidden items-center justify-center gap-8 md:flex">
+        <Link
+          href="/"
+          className="flex items-center gap-2 transition-opacity hover:opacity-80"
+          aria-label="Sirius Sports home page"
+        >
+          <Mountain className="h-8 w-8 text-primary" />
+          <span className="text-xl font-bold">Sirius Sports</span>
+        </Link>
+
+        <div className="hidden items-center justify-center gap-8 md:flex">
+          <nav className="flex items-center gap-8">
             {navigationLinks.map(link => (
               <Link
                 key={link.href}
@@ -49,20 +48,6 @@ export function Navbar() {
               </Link>
             ))}
           </nav>
-        </div>
-
-        <div className="absolute left-1/2 -translate-x-1/2 md:hidden">
-          <Link
-            href="/"
-            className="flex items-center gap-2"
-            aria-label="Sirius Sports home page"
-          >
-            <Mountain className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold">Sirius Sports</span>
-          </Link>
-        </div>
-
-        <div className="hidden items-center justify-center gap-4 md:flex">
           <ThemeToggle />
         </div>
 
