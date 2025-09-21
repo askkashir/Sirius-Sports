@@ -1,16 +1,17 @@
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {Textarea} from '@/components/ui/textarea';
+import {Mail, Phone} from 'lucide-react';
 
-export default function ContactPage() {
+export function ContactSection() {
   return (
-    <div className="py-24 sm:py-32">
+    <section className="py-24 sm:py-32">
       <div className="mx-auto max-w-2xl text-center">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-          Contact Us
-        </h1>
+        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          Get in Touch
+        </h2>
         <p className="mt-2 text-lg leading-8 text-muted-foreground">
-          Have a question or feedback? We&apos;d love to hear from you.
+          Questions? We’re here to help. Fill out the form below.
         </p>
       </div>
       <form
@@ -19,36 +20,15 @@ export default function ContactPage() {
         className="mx-auto mt-16 max-w-xl sm:mt-20"
       >
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-          <div>
+          <div className="sm:col-span-2">
             <label
-              htmlFor="first-name"
+              htmlFor="name"
               className="block text-sm font-semibold leading-6 "
             >
-              First name
+              Name
             </label>
             <div className="mt-2.5">
-              <Input
-                type="text"
-                name="first-name"
-                id="first-name"
-                autoComplete="given-name"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="last-name"
-              className="block text-sm font-semibold leading-6 "
-            >
-              Last name
-            </label>
-            <div className="mt-2.5">
-              <Input
-                type="text"
-                name="last-name"
-                id="last-name"
-                autoComplete="family-name"
-              />
+              <Input type="text" name="name" id="name" autoComplete="name" />
             </div>
           </div>
           <div className="sm:col-span-2">
@@ -81,10 +61,22 @@ export default function ContactPage() {
         </div>
         <div className="mt-10">
           <Button type="submit" className="w-full active:scale-95">
-            Let&apos;s talk
+            Send Message
           </Button>
         </div>
       </form>
-    </div>
+      <div className="mt-16 flex justify-center space-x-8 text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <Mail className="h-5 w-5" />
+          <a href="mailto:support@siriussports.com">
+            support@siriussports.com
+          </a>
+        </div>
+        <div className="flex items-center gap-2">
+          <Phone className="h-5 w-5" />
+          <a href="tel:+923001234567">+92 300 1234567</a>
+        </div>
+      </div>
+    </section>
   );
 }

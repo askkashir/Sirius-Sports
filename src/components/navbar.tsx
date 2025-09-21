@@ -27,7 +27,7 @@ export function Navbar() {
     >
       <div className="container mx-auto flex h-20 max-w-[1200px] items-center justify-between px-4">
         <div className="md:absolute md:left-1/2 md:-translate-x-1/2">
-          <Link href="/" aria-label="PeakWear home page">
+          <Link href="/" aria-label="Sirius Sports home page">
             <Mountain className="h-8 w-8 text-primary" />
           </Link>
         </div>

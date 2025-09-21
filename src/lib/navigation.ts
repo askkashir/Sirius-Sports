@@ -1,5 +1,5 @@
 export const navigationLinks = [
   {href: '/', label: 'Home'},
-  {href: '/products', label: 'Products'},
-  {href: '/contact', label: 'Contact'},
+  {href: '/products', label: 'Categories'},
+  {href: '/about', label: 'About'},
 ];

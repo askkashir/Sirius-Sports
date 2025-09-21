@@ -13,14 +13,11 @@ export function HeroSection() {
           Elevate Your Performance
         </h1>
         <p className="mt-6 text-lg leading-8 text-muted-foreground md:text-xl">
-          Luxury athletic wear engineered for peak results.
+          Premium Sportswear - Engineered for Excellence
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
           <Button asChild size="lg" className="active:scale-95">
-            <Link href="/products">Explore Products</Link>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="active:scale-95">
-            <Link href="#">Learn More</Link>
+            <Link href="/products">Explore Categories</Link>
           </Button>
         </div>
       </div>

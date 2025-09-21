@@ -5,8 +5,8 @@ import {Navbar} from '@/components/navbar';
 import {Footer} from '@/components/footer';
 
 export const metadata: Metadata = {
-  title: 'PeakWear',
-  description: 'Elevate Your Performance',
+  title: 'Sirius Sports',
+  description: 'Crafted for Champions',
 };
 
 export default function RootLayout({
