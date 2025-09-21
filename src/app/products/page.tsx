@@ -4,7 +4,7 @@ import {ProductCard} from '@/components/product-card';
 import {Tabs, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {products} from '@/lib/products';
 
-const filters = ['All', 'Sports', 'Lifestyle'];
+const filters = ['All', 'Sports', 'Lifestyle', 'Winter', 'Street', 'Gym'];
 
 export default function ProductsPage() {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -31,7 +31,7 @@ export default function ProductsPage() {
           onValueChange={setActiveFilter}
           className="w-auto"
         >
-          <TabsList>
+          <TabsList className="flex-wrap h-auto">
             {filters.map(filter => (
               <TabsTrigger key={filter} value={filter}>
                 {filter}

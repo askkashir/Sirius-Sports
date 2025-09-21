@@ -1,11 +1,13 @@
 import {HeroSection} from '@/components/hero-section';
-import {FeatureGrid} from '@/components/feature-grid';
+import {ProductTeaserGrid} from '@/components/product-teaser-grid';
+import {WhyPeakWear} from '@/components/why-peakwear';
 
 export default function Home() {
   return (
     <>
       <HeroSection />
-      <FeatureGrid />
+      <WhyPeakWear />
+      <ProductTeaserGrid />
     </>
   );
 }
