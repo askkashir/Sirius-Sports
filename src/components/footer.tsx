@@ -14,7 +14,6 @@ export function Footer() {
           <div className="col-span-1 md:col-span-1">
             <Link href="/" className="mb-4 flex items-center gap-2">
               <Mountain className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold">SIRIUS SPORTS</span>
             </Link>
             <p className="max-w-xs text-sm text-muted-foreground">
               Crafting sportswear with precision craftsmanship and innovative
