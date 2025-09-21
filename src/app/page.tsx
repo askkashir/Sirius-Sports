@@ -10,9 +10,9 @@ export default function Home() {
     <>
       <HeroSection />
       <WhySiriusSports />
-      <StatsHighlight />
       <AboutSection />
       <CategoriesTeaser />
+      <StatsHighlight />
       <ContactSection />
     </>
   );
