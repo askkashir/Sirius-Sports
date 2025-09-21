@@ -32,24 +32,9 @@ export function Navbar() {
           </Link>
         </div>
 
-        <nav className="hidden md:flex">
+        <nav className="hidden items-center justify-center gap-8 md:flex">
           <ul className="flex items-center gap-8">
-            {navigationLinks.slice(0, 1).map(link => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <nav className="hidden md:flex">
-          <ul className="flex items-center gap-8">
-            {navigationLinks.slice(1).map(link => (
+            {navigationLinks.map(link => (
               <li key={link.href}>
                 <Link
                   href={link.href}
