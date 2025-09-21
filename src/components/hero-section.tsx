@@ -5,7 +5,7 @@ import {ArrowDown} from 'lucide-react';
 export function HeroSection() {
   return (
     <section className="relative flex h-screen min-h-[700px] items-center justify-center">
-      <div className="absolute inset-0 -z-10 h-full w-full bg-background dark:bg-[#18181b] dark:bg-[radial-gradient(#1e1e1e_1px,transparent_1px)] dark:[background-size:16px_16px]"></div>
+      <div className="absolute inset-0 -z-10 h-full w-full bg-secondary dark:bg-[#18181b] dark:bg-[radial-gradient(#1e1e1e_1px,transparent_1px)] dark:[background-size:16px_16px]"></div>
       <div className="absolute inset-0 -z-20 h-full w-full bg-background bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(175,90%,40%,0.1),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,255,240,0.1),rgba(255,255,255,0))]"></div>
 
       <div className="container mx-auto max-w-[1200px] px-4 text-center">
