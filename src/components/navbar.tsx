@@ -5,6 +5,7 @@ import {Menu, X, Mountain} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {navigationLinks} from '@/lib/navigation';
 import {cn} from '@/lib/utils';
+import {ThemeToggle} from './theme-toggle';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -48,7 +49,7 @@ export function Navbar() {
           </Link>
         </div>
 
-        <div className="hidden items-center justify-center gap-8 md:flex">
+        <div className="hidden items-center justify-center gap-4 md:flex">
           {categoriesLink && (
             <Link
               href={categoriesLink.href}
@@ -57,6 +58,7 @@ export function Navbar() {
               {categoriesLink.label}
             </Link>
           )}
+          <ThemeToggle />
         </div>
 
         <div className="md:hidden">
@@ -84,6 +86,7 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <ThemeToggle />
           </nav>
         </div>
       )}
