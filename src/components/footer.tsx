@@ -2,9 +2,14 @@
 
 import {Mountain} from 'lucide-react';
 import Link from 'next/link';
+import {useEffect, useState} from 'react';
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   return (
     <footer className="bg-secondary text-secondary-foreground">
@@ -53,7 +58,10 @@ export function Footer() {
             <h3 className="mb-4 font-bold uppercase">Company</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="/about" className="transition-colors hover:text-primary">
+                <Link
+                  href="/about"
+                  className="transition-colors hover:text-primary"
+                >
                   About Us
                 </Link>
               </li>
