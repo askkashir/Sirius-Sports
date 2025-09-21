@@ -18,6 +18,11 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const homeLink = navigationLinks.find(link => link.label === 'Home');
+  const categoriesLink = navigationLinks.find(
+    link => link.label === 'Categories'
+  );
+
   return (
     <header
       className={cn(
@@ -26,26 +31,30 @@ export function Navbar() {
       )}
     >
       <div className="container mx-auto flex h-20 max-w-[1200px] items-center justify-between px-4">
-        <div className="md:absolute md:left-1/2 md:-translate-x-1/2">
+        <nav className="hidden items-center justify-center gap-8 md:flex">
+          {homeLink && (
+            <Link
+              href={homeLink.href}
+              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+            >
+              {homeLink.label}
+            </Link>
+          )}
+        </nav>
+
+        <div className="absolute left-1/2 -translate-x-1/2">
           <Link href="/" aria-label="Sirius Sports home page">
             <Mountain className="h-8 w-8 text-primary" />
           </Link>
         </div>
 
-        <nav className="hidden items-center justify-center gap-8 md:flex">
-          <ul className="flex items-center gap-8">
-            {navigationLinks.map(link => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="hidden md:flex">
+          {categoriesLink && (
+            <Button asChild>
+              <Link href={categoriesLink.href}>{categoriesLink.label}</Link>
+            </Button>
+          )}
+        </div>
 
         <div className="md:hidden">
           <Button
