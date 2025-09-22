@@ -1,33 +1,56 @@
 'use client';
 import {motion} from 'framer-motion';
-import {Award, Leaf, Rocket, Shield} from 'lucide-react';
+import {Badge} from '@/components/ui/badge';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {Bolt, Star, Target, Leaf, Palette, Rocket} from 'lucide-react';
 
 const features = [
   {
-    icon: <Shield className="h-8 w-8 text-primary" />,
-    title: 'Peak Performance',
-    description: 'Precision-engineered for agility and endurance.',
+    icon: <Bolt className="h-8 w-8 text-black" />,
+    badge: 'Peak Tech',
+    title: 'PERFORMANCE ENGINEERED',
+    description:
+      'Precision-engineered fabrics and designs for maximum agility, endurance, and athletic excellence.',
   },
   {
-    icon: <Leaf className="h-8 w-8 text-primary" />,
-    title: 'Eco-Conscious',
-    description: 'Sustainable fabrics for a lighter footprint.',
+    icon: <Star className="h-8 w-8 text-black" />,
+    badge: 'Athlete Tested',
+    title: 'CHAMPIONSHIP QUALITY',
+    description:
+      'Built for athletes who demand the best. Our designs are crafted for peak performance conditions.',
   },
   {
-    icon: <Award className="h-8 w-8 text-primary" />,
-    title: 'Premium Quality',
-    description: 'Durable construction meets luxurious comfort.',
+    icon: <Target className="h-8 w-8 text-black" />,
+    badge: 'Perfect Fit',
+    title: 'PRECISION CRAFTSMANSHIP',
+    description:
+      'Every stitch, seam, and design element is meticulously crafted for uncompromising quality and comfort.',
   },
   {
-    icon: <Rocket className="h-8 w-8 text-primary" />,
-    title: 'Rapid Delivery',
-    description: 'Fast shipping to keep you in the game.',
+    icon: <Leaf className="h-8 w-8 text-black" />,
+    badge: 'Eco-Smart',
+    title: 'SUSTAINABLE INNOVATION',
+    description:
+      "Eco-conscious materials and processes that don't compromise on performance or style.",
+  },
+  {
+    icon: <Palette className="h-8 w-8 text-black" />,
+    badge: 'Personalized',
+    title: 'MODERN DESIGN',
+    description:
+      'Contemporary aesthetics meet functional innovation. Sportswear that performs and inspires.',
+  },
+  {
+    icon: <Rocket className="h-8 w-8 text-black" />,
+    badge: 'Fast Track',
+    title: 'PROJECT ACCELERATION',
+    description:
+      'Rapid development and innovation cycles bringing next-generation sportswear to market.',
   },
 ];
 
@@ -52,48 +75,39 @@ const cardVariants = {
 export function WhySiriusSports() {
   return (
     <motion.section
-      className="bg-secondary/30 py-24 sm:py-32"
+      className="pt-16 sm:pt-24"
       initial="hidden"
       whileInView="visible"
       variants={containerVariants}
       viewport={{once: true, amount: 0.2}}
     >
-      <div className="container mx-auto max-w-[1200px] px-4">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Why Sirius Sports?
-          </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-            At Sirius Sports, we craft high-performance apparel using
-            eco-friendly materials and precision engineering—so you can focus on
-            your game, not your gear.
-          </p>
-        </div>
-        <motion.div
-          className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4"
-          variants={containerVariants}
-        >
-          {features.map(feature => (
-            <motion.div key={feature.title} variants={cardVariants}>
-              <Card className="transform text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-black/40">
-                <CardHeader className="items-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-secondary">
-                    {feature.icon}
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <CardTitle className="text-xl font-semibold">
-                    {feature.title}
-                  </CardTitle>
-                  <p className="mt-2 text-muted-foreground">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
+      <motion.div
+        className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+        variants={containerVariants}
+      >
+        {features.map(feature => (
+          <motion.div key={feature.title} variants={cardVariants}>
+            <Card className="group relative h-full transform text-left transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_#00fff0] bg-[#242424] border-white/10 text-white">
+              <Badge className="absolute top-4 right-4 bg-[#00fff0] text-black hover:bg-[#00fff0]">
+                {feature.badge}
+              </Badge>
+              <CardHeader>
+                <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-[#00fff0]">
+                  {feature.icon}
+                </div>
+              </CardHeader>
+              <CardContent>
+                <CardTitle className="text-xl font-bold uppercase">
+                  {feature.title}
+                </CardTitle>
+                <p className="mt-2 text-[#e0e0e0]">
+                  {feature.description}
+                </p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </motion.div>
     </motion.section>
   );
 }
