@@ -8,8 +8,17 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import Link from 'next/link';
+import { slugify } from '@/lib/utils';
 
-export function ProductCard({title, price, image, imageHint}: Product) {
+export function ProductCard({
+  title,
+  price,
+  image,
+  imageHint,
+  category,
+}: Product) {
+  const categoryId = category.toLowerCase().replace(' ', '-');
   return (
     <Card className="group flex transform flex-col overflow-hidden bg-surface transition-all duration-300 hover:shadow-lg hover:shadow-black/40">
       <CardHeader className="overflow-hidden p-0">
@@ -29,8 +38,15 @@ export function ProductCard({title, price, image, imageHint}: Product) {
         </p>
       </CardContent>
       <CardFooter className="p-4 pt-0">
-        <Button size="sm" className="w-full active:scale-95" aria-label={`View details for ${title}`}>
-          View Details
+        <Button
+          asChild
+          size="sm"
+          className="w-full active:scale-95"
+          aria-label={`View details for ${title}`}
+        >
+          <Link href={`/products/${categoryId}/${slugify(title)}`}>
+            View Details
+          </Link>
         </Button>
       </CardFooter>
     </Card>
