@@ -3,13 +3,6 @@ import Link from 'next/link';
 import {motion} from 'framer-motion';
 import {Rocket, Code, Trophy, Handshake} from 'lucide-react';
 import {Button} from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 
 const stats = [
   {
@@ -61,7 +54,7 @@ export function StatsHighlight() {
       viewport={{once: true, amount: 0.3}}
     >
       <div className="container mx-auto max-w-[1200px] px-4">
-        <div className="rounded-lg bg-secondary/30 p-8 md:p-12">
+        <div className="rounded-lg bg-secondary/40 p-8 md:p-12">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
             {stats.map(stat => (
               <motion.div
@@ -70,7 +63,7 @@ export function StatsHighlight() {
                 variants={itemVariants}
               >
                 <div className="mb-4 flex justify-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-secondary">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-background/70">
                     {stat.icon}
                   </div>
                 </div>

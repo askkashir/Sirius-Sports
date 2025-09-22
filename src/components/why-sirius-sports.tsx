@@ -87,7 +87,7 @@ export function WhySiriusSports() {
       >
         {features.map(feature => (
           <motion.div key={feature.title} variants={cardVariants}>
-            <Card className="group relative h-full transform text-left transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/20 bg-card">
+            <Card className="group relative h-full transform text-left transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/20 bg-secondary/30">
               <Badge className="absolute top-4 right-4 bg-primary text-primary-foreground hover:bg-primary/90">
                 {feature.badge}
               </Badge>

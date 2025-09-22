@@ -3,6 +3,7 @@ import './globals.css';
 import {Toaster} from '@/components/ui/toaster';
 import {Navbar} from '@/components/navbar';
 import {Footer} from '@/components/footer';
+import {cn} from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'Sirius Sports',
@@ -28,7 +29,8 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased">
+      <body className={cn('font-body antialiased')}>
+        <div className="absolute top-0 left-0 -z-20 h-full w-full bg-background bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(rgba(255,255,255,0.1)_1px,transparent_1px)]"></div>
         <Navbar />
         <main className="container mx-auto max-w-[1200px] px-4">
           {children}
