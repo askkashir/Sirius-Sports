@@ -11,42 +11,42 @@ import {Bolt, Star, Target, Leaf, Palette, Rocket} from 'lucide-react';
 
 const features = [
   {
-    icon: <Bolt className="h-8 w-8 text-black" />,
+    icon: <Bolt className="h-8 w-8 text-primary-foreground" />,
     badge: 'Peak Tech',
     title: 'PERFORMANCE ENGINEERED',
     description:
       'Precision-engineered fabrics and designs for maximum agility, endurance, and athletic excellence.',
   },
   {
-    icon: <Star className="h-8 w-8 text-black" />,
+    icon: <Star className="h-8 w-8 text-primary-foreground" />,
     badge: 'Athlete Tested',
     title: 'CHAMPIONSHIP QUALITY',
     description:
       'Built for athletes who demand the best. Our designs are crafted for peak performance conditions.',
   },
   {
-    icon: <Target className="h-8 w-8 text-black" />,
+    icon: <Target className="h-8 w-8 text-primary-foreground" />,
     badge: 'Perfect Fit',
     title: 'PRECISION CRAFTSMANSHIP',
     description:
       'Every stitch, seam, and design element is meticulously crafted for uncompromising quality and comfort.',
   },
   {
-    icon: <Leaf className="h-8 w-8 text-black" />,
+    icon: <Leaf className="h-8 w-8 text-primary-foreground" />,
     badge: 'Eco-Smart',
     title: 'SUSTAINABLE INNOVATION',
     description:
       "Eco-conscious materials and processes that don't compromise on performance or style.",
   },
   {
-    icon: <Palette className="h-8 w-8 text-black" />,
+    icon: <Palette className="h-8 w-8 text-primary-foreground" />,
     badge: 'Personalized',
     title: 'MODERN DESIGN',
     description:
       'Contemporary aesthetics meet functional innovation. Sportswear that performs and inspires.',
   },
   {
-    icon: <Rocket className="h-8 w-8 text-black" />,
+    icon: <Rocket className="h-8 w-8 text-primary-foreground" />,
     badge: 'Fast Track',
     title: 'PROJECT ACCELERATION',
     description:
@@ -87,12 +87,12 @@ export function WhySiriusSports() {
       >
         {features.map(feature => (
           <motion.div key={feature.title} variants={cardVariants}>
-            <Card className="group relative h-full transform text-left transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_#00fff0] bg-[#242424] border-white/10 text-white">
-              <Badge className="absolute top-4 right-4 bg-[#00fff0] text-black hover:bg-[#00fff0]">
+            <Card className="group relative h-full transform text-left transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/20 bg-card">
+              <Badge className="absolute top-4 right-4 bg-primary text-primary-foreground hover:bg-primary/90">
                 {feature.badge}
               </Badge>
               <CardHeader>
-                <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-[#00fff0]">
+                <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-primary">
                   {feature.icon}
                 </div>
               </CardHeader>
@@ -100,7 +100,7 @@ export function WhySiriusSports() {
                 <CardTitle className="text-xl font-bold uppercase">
                   {feature.title}
                 </CardTitle>
-                <p className="mt-2 text-[#e0e0e0]">
+                <p className="mt-2 text-muted-foreground">
                   {feature.description}
                 </p>
               </CardContent>
