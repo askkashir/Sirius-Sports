@@ -5,6 +5,7 @@ import {Navbar} from '@/components/navbar';
 import {Footer} from '@/components/footer';
 import {cn} from '@/lib/utils';
 import { BackgroundImages } from '@/components/background-images';
+import { Chatbot } from '@/components/chatbot';
 
 export const metadata: Metadata = {
   title: 'Sirius Sports',
@@ -54,6 +55,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <Chatbot />
         <Toaster />
       </body>
     </html>
