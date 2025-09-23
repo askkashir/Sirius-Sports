@@ -77,7 +77,7 @@ export function Chatbot() {
   const resetChat = useCallback(() => {
     setMessages([
       {
-        id: 'welcome',
+        id: crypto.randomUUID(),
         role: 'assistant',
         text: '👋 Hello! Welcome to Sirius Sports – your trusted partner in Sportswear, Streetwear, Workwear & Hosiery. I’m here to assist you. Please choose one of the options below:',
       },
@@ -95,7 +95,7 @@ export function Chatbot() {
   };
 
   const addMessage = (text: string | React.ReactNode, role: 'user' | 'assistant') => {
-    const newMessage = { id: Date.now().toString(), text, role };
+    const newMessage = { id: crypto.randomUUID(), text, role };
     setMessages(prev => [...prev, newMessage]);
     return newMessage;
   };
