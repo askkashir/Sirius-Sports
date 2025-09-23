@@ -78,9 +78,10 @@ export function StatsHighlight() {
           </div>
           <div className="mt-12 text-center">
             <p className="mx-auto max-w-3xl text-lg text-muted-foreground">
-              Sirius Sports is an innovative sportswear project, fusing tech and
-              design for the next generation of athletes. We’re building our
-              story. Be a part of it.
+              At Sirius Sports, we don’t just produce clothing — we create
+              partnerships built on trust. With a commitment to excellence and
+              customer satisfaction, we aim to empower our clients and end-users
+              with apparel that truly stands out.
             </p>
             <div className="mt-8">
               <Button asChild size="lg" className="active:scale-95">

@@ -61,8 +61,11 @@ export function DevelopmentProcess() {
             Our Development Process
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-            From concept to launch, we build every element with precision and
-            innovation
+            Our vision is to make Sirius Sports a trusted global name in
+            apparel, where quality meets style. From everyday essentials like
+            socks and undergarments to performance-driven sportswear, we ensure
+            every piece is designed to provide comfort, confidence, and
+            long-lasting value.
           </p>
         </div>
         <motion.div
