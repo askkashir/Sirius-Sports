@@ -27,9 +27,12 @@ export function AboutSection() {
         </h2>
         <div className="prose prose-invert mx-auto mt-4 max-w-3xl text-lg text-muted-foreground">
           <p>
-            Founded by athletes for athletes, Sirius Sports combines
-            cutting-edge design, sustainable practices, and expert craftsmanship
-            to deliver gear that elevates every performance.
+            Sirius Sports is a Pakistan-based apparel manufacturer and exporter,
+            dedicated to delivering high-quality hosiery, streetwear,
+            sportswear, and workwear to customers worldwide. With a strong focus
+            on innovation, durability, and modern design, we combine premium
+            fabrics with expert craftsmanship to create products that meet
+            international standards.
           </p>
         </div>
       </div>

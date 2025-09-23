@@ -21,8 +21,9 @@ export function Footer() {
               <Mountain className="h-8 w-8 text-primary" />
             </Link>
             <p className="max-w-xs text-sm text-muted-foreground">
-              Crafting sportswear with precision craftsmanship and innovative
-              design for athletes and active lifestyles.
+              A Pakistan-based apparel manufacturer and exporter, dedicated to
+              delivering high-quality hosiery, streetwear, sportswear, and
+              workwear to customers worldwide.
             </p>
           </div>
 
