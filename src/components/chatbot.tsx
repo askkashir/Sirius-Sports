@@ -32,17 +32,10 @@ type LeadFormValues = z.infer<typeof LeadSchema>;
 
 type Message = {
   id: string;
-  text: string | React.ReactNode;
+  text?: string;
+  component?: React.ReactNode;
   role: 'user' | 'assistant';
 };
-
-enum ChatState {
-  MainMenu,
-  ProductCategories,
-  CustomOrders,
-  FreeText,
-  LeadCapture,
-}
 
 const customOrderQuestions = [
   'What product do you want to customize?',
@@ -57,9 +50,12 @@ export function Chatbot() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [chatState, setChatState] = useState<ChatState>(ChatState.MainMenu);
+  
+  const [isAwaitingUserInput, setIsAwaitingUserInput] = useState(false);
+  const [currentAction, setCurrentAction] = useState<string | null>(null);
   const [customOrderStep, setCustomOrderStep] = useState(0);
   const [customOrderAnswers, setCustomOrderAnswers] = useState<string[]>([]);
+
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -67,207 +63,314 @@ export function Chatbot() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
-
-  const leadForm = useForm<LeadFormValues>({
-    resolver: zodResolver(LeadSchema),
-    defaultValues: { name: '', email: '' },
-  });
-
-  const resetChat = useCallback(() => {
-    setMessages([
-      {
-        id: crypto.randomUUID(),
-        role: 'assistant',
-        text: '👋 Hello! Welcome to Sirius Sports – your trusted partner in Sportswear, Streetwear, Workwear & Hosiery. I’m here to assist you. Please choose one of the options below:',
-      },
-    ]);
-    setChatState(ChatState.MainMenu);
-    setCustomOrderStep(0);
-    setCustomOrderAnswers([]);
-  }, []);
-
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-    if (!isOpen && messages.length === 0) {
-      resetChat();
-    }
-  };
-
-  const addMessage = (text: string | React.ReactNode, role: 'user' | 'assistant') => {
-    const newMessage = { id: crypto.randomUUID(), text, role };
+  }, [messages, isLoading]);
+  
+  const addMessage = (message: Omit<Message, 'id'>) => {
+    const newMessage = { ...message, id: crypto.randomUUID() };
     setMessages(prev => [...prev, newMessage]);
     return newMessage;
   };
 
-  const handleMenuClick = (text: string, response: string | React.ReactNode, nextState?: ChatState) => {
-    addMessage(text, 'user');
+  const handleToggle = () => {
+    setIsOpen(prev => !prev);
+    if (messages.length === 0) {
+      resetChat();
+    }
+  };
+
+  // Main Menu component
+  const MainMenu = ({ onSelect }: { onSelect: (option: string) => void }) => {
+    const [selectionMade, setSelectionMade] = useState(false);
+    const options = [
+      '⿡ View Our Product Categories',
+      '⿢ Custom Orders / OEM Production',
+      '⿣ Shipping & Delivery Information',
+      '⿤ Payment Methods',
+      '⿥ Minimum Order Quantity (MOQ)',
+      '⿦ Sizing & Fabric Details',
+      '⿧ Contact Support / Talk to a Person',
+    ];
+
+    const handleClick = (option: string) => {
+      setSelectionMade(true);
+      onSelect(option);
+    };
+
+    return (
+      <div className="flex flex-col items-start space-y-2">
+        {options.map((option) => (
+          <Button key={option} variant="outline" size="sm" onClick={() => handleClick(option)} disabled={selectionMade}>
+            {option}
+          </Button>
+        ))}
+      </div>
+    );
+  };
+  
+  // Product Categories Menu component
+  const ProductCategoriesMenu = ({ onSelect }: { onSelect: (category: string) => void }) => {
+    const [selectionMade, setSelectionMade] = useState(false);
+    const categories = [
+      '🧦 Hosiery',
+      '👕 Streetwear',
+      '🧥 Jackets & Workwear',
+      '🏋 Sportswear'
+    ];
+
+    const handleClick = (category: string) => {
+      setSelectionMade(true);
+      onSelect(category);
+    };
+
+    return (
+      <div className="flex flex-col items-start space-y-2">
+        {categories.map((category) => (
+          <Button key={category} variant="outline" size="sm" onClick={() => handleClick(category)} disabled={selectionMade}>
+            {category}
+          </Button>
+        ))}
+         <Button variant="ghost" size="sm" onClick={() => handleClick('Back')} disabled={selectionMade}>
+            ‹ Back to Main Menu
+        </Button>
+      </div>
+    );
+  };
+
+  const resetChat = useCallback(() => {
+    setIsLoading(false);
+    setIsAwaitingUserInput(false);
+    setCurrentAction(null);
+    setCustomOrderStep(0);
+    setCustomOrderAnswers([]);
+    setMessages([]);
+    
     setTimeout(() => {
-      addMessage(response, 'assistant');
-      if (nextState !== undefined) {
-        setChatState(nextState);
-      }
+        addMessage({
+            role: 'assistant',
+            text: '👋 Hello! Welcome to Sirius Sports – your trusted partner in Sportswear, Streetwear, Workwear & Hosiery. I’m here to assist you. Please choose one of the options below:',
+        });
+        addMessage({
+            role: 'assistant',
+            component: <MainMenu onSelect={handleMenuSelection} />,
+        });
+    }, 200);
+  }, []);
+
+  const handleMenuSelection = async (selection: string) => {
+    addMessage({ role: 'user', text: selection });
+    setIsLoading(true);
+
+    // A map of selections to functions that handle them
+    const selectionHandlers: { [key: string]: () => void } = {
+      '⿡ View Our Product Categories': () => {
+        addMessage({ role: 'assistant', text: '👉 Please select a category:' });
+        addMessage({ role: 'assistant', component: <ProductCategoriesMenu onSelect={handleCategorySelection} /> });
+      },
+      '⿢ Custom Orders / OEM Production': () => {
+        addMessage({ role: 'assistant', text: `✍ Please answer a few quick questions so we can assist you better:\n\n- ${customOrderQuestions[0]}` });
+        setIsAwaitingUserInput(true);
+        setCurrentAction('custom_order');
+        setCustomOrderStep(0);
+        setCustomOrderAnswers([]);
+      },
+      '⿣ Shipping & Delivery Information': () => handleGenericResponse('Shipping & Delivery Information'),
+      '⿤ Payment Methods': () => handleGenericResponse('Payment Methods'),
+      '⿥ Minimum Order Quantity (MOQ)': () => handleGenericResponse('Minimum Order Quantity (MOQ)'),
+      '⿦ Sizing & Fabric Details': () => handleGenericResponse('Sizing & Fabric Details'),
+      '⿧ Contact Support / Talk to a Person': () => {
+        addMessage({ role: 'assistant', text: '💬 Please type your message below. Our representative will connect with you shortly.' });
+        setIsAwaitingUserInput(true);
+        setCurrentAction('free_text');
+      },
+    };
+    
+    setTimeout(() => {
+        const handler = selectionHandlers[selection];
+        if (handler) {
+            handler();
+        } else {
+            addMessage({ role: 'assistant', text: "I'm sorry, I didn't understand that selection." });
+        }
+        setIsLoading(false);
     }, 500);
   };
   
-  const handleLeadCapture = () => {
-    addMessage("✨ Before you leave, may I have your email or WhatsApp number so we can share our latest catalog & offers with you?", 'assistant');
-    setChatState(ChatState.LeadCapture);
-  }
-
-  const handleLeadFormSubmit = async (values: LeadFormValues) => {
-    setIsLoading(true);
-    try {
-      await captureLead(values);
-      addMessage('Thanks! Our team will review your message and get back to you soon.', 'assistant');
-      leadForm.reset();
-      setTimeout(resetChat, 2000);
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Something went wrong. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoading(false);
+  const handleCategorySelection = (category: string) => {
+    addMessage({ role: 'user', text: category });
+    if (category === 'Back') {
+      addMessage({ role: 'assistant', text: 'Please choose one of the options below:' });
+      addMessage({ role: 'assistant', component: <MainMenu onSelect={handleMenuSelection} /> });
+      return;
     }
+    
+    setIsLoading(true);
+    setTimeout(() => {
+        const responses: { [key: string]: string } = {
+            '🧦 Hosiery': 'Great choice! We have a wide range of socks, leggings, and undergarments. What specifically are you looking for?',
+            '👕 Streetwear': 'Our streetwear collection includes trendy T-shirts, hoodies, and tracksuits.',
+            '🧥 Jackets & Workwear': 'We offer durable and stylish jackets and workwear for all seasons.',
+            '🏋 Sportswear': 'Our sportswear is designed for peak performance, including gymwear and training kits.',
+        };
+        addMessage({ role: 'assistant', text: responses[category] || 'Please specify what you are looking for.' });
+        setIsAwaitingUserInput(true);
+        setCurrentAction('free_text');
+        setIsLoading(false);
+    }, 500);
+  };
+
+  const handleGenericResponse = async (topic: string) => {
+      try {
+        const response = await chat(topic);
+        addMessage({ role: 'assistant', text: response });
+        promptForLeadCapture();
+      } catch (error) {
+        addMessage({ role: 'assistant', text: 'Sorry, I am having trouble connecting. Please try again later.' });
+      }
   };
   
-  const handleCustomOrderSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const answer = formData.get('message') as string;
+  const promptForLeadCapture = () => {
+    addMessage({ role: 'assistant', text: '✨ Before you leave, may I have your email or WhatsApp number so we can share our latest catalog & offers with you?' });
+    addMessage({ role: 'assistant', component: <LeadCaptureForm /> });
+  };
+  
+  const handleUserInput = async (input: string) => {
+    addMessage({ role: 'user', text: input });
+    setIsLoading(true);
+    setIsAwaitingUserInput(false);
     
-    if (!answer.trim()) return;
+    const action = currentAction;
+    setCurrentAction(null);
 
-    addMessage(answer, 'user');
+    switch (action) {
+        case 'custom_order':
+            await handleCustomOrderInput(input);
+            break;
+        case 'free_text':
+        default:
+            try {
+                const response = await chat(input);
+                addMessage({ role: 'assistant', text: response });
+                promptForLeadCapture();
+            } catch (error) {
+                addMessage({ role: 'assistant', text: 'Sorry, I am having trouble connecting. Please try again later.' });
+            }
+            break;
+    }
+    setIsLoading(false);
+  };
+  
+  const handleCustomOrderInput = async (answer: string) => {
     const newAnswers = [...customOrderAnswers, answer];
     setCustomOrderAnswers(newAnswers);
-    event.currentTarget.reset();
-    
-    if (customOrderStep < customOrderQuestions.length - 1) {
-      setCustomOrderStep(customOrderStep + 1);
-       setTimeout(() => {
-        addMessage(customOrderQuestions[customOrderStep + 1], 'assistant');
-      }, 500);
+
+    const nextStep = customOrderStep + 1;
+    setCustomOrderStep(nextStep);
+
+    if (nextStep < customOrderQuestions.length) {
+      addMessage({ role: 'assistant', text: customOrderQuestions[nextStep] });
+      setIsAwaitingUserInput(true);
+      setCurrentAction('custom_order');
     } else {
-      setIsLoading(true);
-       setTimeout(async () => {
-         const leadDetails = {
+      // End of custom order questions
+      const leadDetails = {
            name: 'Custom Order Lead',
-           email: 'N/A', // Or prompt for email separately
+           email: 'N/A',
            details: customOrderQuestions.map((q, i) => `${q}: ${newAnswers[i]}`).join('\n')
-         };
-         try {
-           await captureLead({name: leadDetails.name, email: leadDetails.details});
-           addMessage('✍ Thank you! Our production team will reply within 12–24 hours with a quote.', 'assistant');
-           handleLeadCapture();
-         } catch (error) {
-            toast({
-              title: 'Error',
-              description: 'Could not save your custom order request.',
-              variant: 'destructive',
-            });
-         } finally {
-            setIsLoading(false);
-         }
-      }, 1000);
+      };
+      try {
+        await captureLead({name: leadDetails.name, email: leadDetails.details});
+        addMessage({ role: 'assistant', text: '✍ Thank you! Our production team will reply within 12–24 hours with a quote.' });
+        promptForLeadCapture();
+      } catch (error) {
+         toast({
+           title: 'Error',
+           description: 'Could not save your custom order request.',
+           variant: 'destructive',
+         });
+      }
     }
   };
 
+  const LeadCaptureForm = () => {
+    const leadForm = useForm<LeadFormValues>({
+        resolver: zodResolver(LeadSchema),
+        defaultValues: { name: '', email: '' },
+    });
+    
+    const [submitted, setSubmitted] = useState(false);
 
-  const handleFreeTextSubmit = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const userInput = formData.get('message') as string;
-    if (!userInput.trim()) return;
+    const handleLeadFormSubmit = async (values: LeadFormValues) => {
+        setIsLoading(true);
+        setSubmitted(true);
+        try {
+            await captureLead(values);
+            addMessage({ role: 'user', text: `Name: ${values.name}, Email: ${values.email}` });
+            addMessage({ role: 'assistant', text: 'Thanks! Our team will review your message and get back to you soon.'});
+            setTimeout(resetChat, 3000);
+        } catch (error) {
+            toast({
+                title: 'Error',
+                description: 'Something went wrong. Please try again.',
+                variant: 'destructive',
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-    addMessage(userInput, 'user');
-    event.currentTarget.reset();
-    setIsLoading(true);
-
-    try {
-      const response = await chat(userInput);
-      addMessage(response, 'assistant');
-      handleLeadCapture();
-    } catch (error) {
-      addMessage('Sorry, I am having trouble connecting. Please try again later.', 'assistant');
-    } finally {
-      setIsLoading(false);
+    if (submitted) {
+      return null;
     }
-  }, []);
 
-  const renderCurrentState = () => {
-    switch (chatState) {
-      case ChatState.MainMenu:
-        return (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
-            className="p-4 border-t space-y-2"
-          >
-            <Button variant="outline" className="w-full justify-start" onClick={() => handleMenuClick('View Our Product Categories', '👉 Please select a category:', ChatState.ProductCategories)}>⿡ View Our Product Categories</Button>
-            <Button variant="outline" className="w-full justify-start" onClick={() => handleMenuClick('Custom Orders / OEM Production', `✍ Please answer a few quick questions so we can assist you better:\n\n- ${customOrderQuestions[0]}`, ChatState.CustomOrders)}>⿢ Custom Orders / OEM Production</Button>
-            <Button variant="outline" className="w-full justify-start" onClick={() => { handleMenuClick('Shipping & Delivery Information', '📦 We offer worldwide delivery!\n- Standard Shipping: 7–12 business days\n- Express Shipping: 3–5 business days\n- Tracking ID shared after dispatch\n\n(Would you like to know estimated shipping cost to your country?)'); handleLeadCapture(); }}>⿣ Shipping & Delivery Information</Button>
-            <Button variant="outline" className="w-full justify-start" onClick={() => { handleMenuClick('Payment Methods', '💳 We accept:\n- Bank Transfer (International)\n- PayPal\n- Western Union\n- Secure Payment Gateways\n\n(Which payment method do you prefer?)'); handleLeadCapture(); }}>⿤ Payment Methods</Button>
-            <Button variant="outline" className="w-full justify-start" onClick={() => { handleMenuClick('Minimum Order Quantity (MOQ)', '📌 Our MOQ depends on the product:\n- Hosiery: 500 pairs per design\n- T-Shirts / Hoodies: 50–100 pcs per design\n- Jackets: 30–50 pcs per design\n- Custom Orders: negotiable depending on style & fabric'); handleLeadCapture(); }}>⿥ Minimum Order Quantity (MOQ)</Button>
-            <Button variant="outline" className="w-full justify-start" onClick={() => { handleMenuClick('Sizing & Fabric Details', '📐 Sizes Available: XS – 5XL (Custom sizes also available)\n👕 Fabrics: Cotton, Polyester, Fleece, Lycra, Spandex, Blends\n\n(Would you like to receive our Fabric Catalog?)'); handleLeadCapture(); }}>⿦ Sizing & Fabric Details</Button>
-            <Button variant="outline" className="w-full justify-start" onClick={() => handleMenuClick('Contact Support / Talk to a Person', '💬 Please type your message below. Our representative will connect with you shortly.', ChatState.FreeText)}>⿧ Contact Support / Talk to a Person</Button>
-          </motion.div>
-        );
-      case ChatState.ProductCategories:
-        return (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
-            className="p-4 border-t space-y-2"
-          >
-            <Button variant="outline" className="w-full justify-start" onClick={() => { handleMenuClick('Hosiery', 'Great choice! We have a wide range of socks, leggings, and undergarments. What specifically are you looking for?'); handleLeadCapture(); }}>🧦 Hosiery</Button>
-            <Button variant="outline" className="w-full justify-start" onClick={() => { handleMenuClick('Streetwear', 'Our streetwear collection includes trendy T-shirts, hoodies, and tracksuits.'); handleLeadCapture(); }}>👕 Streetwear</Button>
-            <Button variant="outline" className="w-full justify-start" onClick={() => { handleMenuClick('Jackets & Workwear', 'We offer durable and stylish jackets and workwear for all seasons.'); handleLeadCapture(); }}>🧥 Jackets & Workwear</Button>
-            <Button variant="outline" className="w-full justify-start" onClick={() => { handleMenuClick('Sportswear', 'Our sportswear is designed for peak performance, including gymwear and training kits.'); handleLeadCapture(); }}>🏋 Sportswear</Button>
-            <Button variant="ghost" className="w-full justify-start" onClick={() => setChatState(ChatState.MainMenu)}>‹ Back to Main Menu</Button>
-          </motion.div>
-        );
-      case ChatState.LeadCapture:
-        return (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
-            className="p-4 border-t"
-          >
+    return (
+        <div className="p-4 bg-muted/50 rounded-lg">
             <Form {...leadForm}>
-              <form onSubmit={leadForm.handleSubmit(handleLeadFormSubmit)} className="space-y-4">
+              <form onSubmit={leadForm.handleSubmit(handleLeadFormSubmit)} className="space-y-3">
                 <FormField control={leadForm.control} name="name" render={({ field }) => (
-                  <FormItem><FormLabel>Name or WhatsApp</FormLabel><FormControl><Input placeholder="Your Name / Number" {...field} /></FormControl><FormMessage /></FormItem>
+                  <FormItem><FormLabel className="text-xs">Name or WhatsApp</FormLabel><FormControl><Input placeholder="Your Name / Number" {...field} className="h-8" /></FormControl><FormMessage /></FormItem>
                 )} />
                 <FormField control={leadForm.control} name="email" render={({ field }) => (
-                  <FormItem><FormLabel>Email</FormLabel><FormControl><Input type="email" placeholder="your@email.com" {...field} /></FormControl><FormMessage /></FormItem>
+                  <FormItem><FormLabel className="text-xs">Email</FormLabel><FormControl><Input type="email" placeholder="your@email.com" {...field} className="h-8"/></FormControl><FormMessage /></FormItem>
                 )} />
-                <Button type="submit" className="w-full" disabled={isLoading}>{isLoading ? <Loader2 className="animate-spin" /> : 'Submit'}</Button>
+                <Button type="submit" size="sm" className="w-full" disabled={isLoading}>{isLoading ? <Loader2 className="animate-spin" /> : 'Submit'}</Button>
               </form>
             </Form>
-          </motion.div>
-        );
-      case ChatState.CustomOrders:
-         return (
-           <div className="p-4 border-t">
-             <form onSubmit={handleCustomOrderSubmit} className="flex gap-2">
-               <Input name="message" placeholder="Your answer..." className="flex-1" autoComplete="off" disabled={isLoading} autoFocus />
-               <Button type="submit" size="icon" disabled={isLoading}><Send /></Button>
-             </form>
-           </div>
-         );
-      case ChatState.FreeText:
-        return (
-          <div className="p-4 border-t">
-            <form onSubmit={handleFreeTextSubmit} className="flex gap-2">
-              <Textarea name="message" placeholder="Type your message..." className="flex-1" autoComplete="off" disabled={isLoading} />
-              <Button type="submit" size="icon" disabled={isLoading}><Send /></Button>
-            </form>
-          </div>
-        );
-      default:
-        return null;
-    }
+        </div>
+    );
   };
+  
+  const UserInputForm = () => {
+    const [inputValue, setInputValue] = useState('');
+    
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!inputValue.trim() || isLoading) return;
+        handleUserInput(inputValue);
+        setInputValue('');
+    };
+
+    const placeholder = isAwaitingUserInput
+        ? 'Your answer...'
+        : 'Type your message...';
+
+    return (
+        <div className="p-4 border-t">
+             <form onSubmit={handleSubmit} className="flex gap-2">
+                <Input
+                    name="message"
+                    placeholder={placeholder}
+                    className="flex-1"
+                    autoComplete="off"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    disabled={isLoading}
+                    autoFocus
+                />
+               <Button type="submit" size="icon" disabled={isLoading || !inputValue.trim()}><Send /></Button>
+             </form>
+        </div>
+    )
+  }
 
   return (
     <>
@@ -290,10 +393,11 @@ export function Chatbot() {
               <div className="flex-1 p-4 overflow-y-auto">
                 <div className="space-y-4">
                   {messages.map((message) => (
-                    <div key={message.id} className={`flex gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    <div key={message.id} className={`flex gap-2.5 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                       {message.role === 'assistant' && <Avatar className="w-8 h-8"><AvatarFallback>SS</AvatarFallback></Avatar>}
-                      <div className={`whitespace-pre-wrap max-w-[80%] rounded-lg px-3 py-2 text-sm ${message.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
+                      <div className={`whitespace-pre-wrap max-w-[85%] rounded-lg px-3 py-2 text-sm ${message.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
                         {message.text}
+                        {message.component}
                       </div>
                     </div>
                   ))}
@@ -308,9 +412,7 @@ export function Chatbot() {
                   <div ref={messagesEndRef} />
                 </div>
               </div>
-              <AnimatePresence>
-                {renderCurrentState()}
-              </AnimatePresence>
+              <UserInputForm />
             </div>
           </motion.div>
         )}
