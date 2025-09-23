@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { chat } from '@/ai/flows/chat-flow';
-import { captureLead, LeadSchema } from '@/ai/flows/lead-capture-flow';
+import { captureLead } from '@/ai/flows/lead-capture-flow';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,6 +21,11 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+
+export const LeadSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters.'),
+  email: z.string().email('Please enter a valid email address.'),
+});
 
 type LeadFormValues = z.infer<typeof LeadSchema>;
 
