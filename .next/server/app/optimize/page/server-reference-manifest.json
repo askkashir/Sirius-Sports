@@ -1,0 +1,16 @@
+{
+  "node": {
+    "406d64fc0327f9940a3940610565126b0ef44cea06": {
+      "workers": {
+        "app/optimize/page": {
+          "moduleId": "[project]/.next-internal/server/app/optimize/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/ai/flows/optimize-vite-config.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/optimize/page": "action-browser"
+      }
+    }
+  },
+  "edge": {}
+}
