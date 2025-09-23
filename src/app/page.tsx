@@ -17,12 +17,11 @@ export default function Home() {
               Why Choose Sirius Sports
             </h2>
             <p className="mx-auto mt-4 max-w-3xl text-lg text-muted-foreground">
-              Sirius Sports is a Pakistan-based apparel manufacturer and
-              exporter, dedicated to delivering high-quality hosiery,
-              streetwear, sportswear, and workwear to customers worldwide. With
-              a strong focus on innovation, durability, and modern design, we
-              combine premium fabrics with expert craftsmanship to create
-              products that meet international standards.
+              Our vision is to make Sirius Sports a trusted global name in
+              apparel, where quality meets style. From everyday essentials like
+              socks and undergarments to performance-driven sportswear, we ensure
+              every piece is designed to provide comfort, confidence, and
+              long-lasting value.
             </p>
           </div>
           <WhySiriusSports />
