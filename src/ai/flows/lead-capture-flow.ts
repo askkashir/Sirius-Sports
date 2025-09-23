@@ -5,7 +5,6 @@
  * - captureLead - A function that takes a user's name and email and appends it to a file.
  */
 
-import { ai } from '@/ai/genkit';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { z } from 'zod';
