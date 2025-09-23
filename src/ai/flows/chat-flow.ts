@@ -122,7 +122,19 @@ Our representative will connect with you shortly.
   User question: {{{input}}}`,
 });
 
+const chatFlow = ai.defineFlow(
+  {
+    name: 'chatFlow',
+    inputSchema: z.string(),
+    outputSchema: z.string(),
+  },
+  async (input) => {
+    const { output } = await chatPrompt(input);
+    return output ?? "I'm sorry, I couldn't generate a response. Please try again.";
+  }
+);
+
+
 export async function chat(question: string): Promise<string> {
-  const { output } = await chatPrompt(question);
-  return output ?? "I'm sorry, I couldn't generate a response. Please try again.";
+  return chatFlow(question);
 }
