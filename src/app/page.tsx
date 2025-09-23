@@ -17,11 +17,10 @@ export default function Home() {
               Why Choose Sirius Sports
             </h2>
             <p className="mx-auto mt-4 max-w-3xl text-lg text-muted-foreground">
-              Our vision is to make Sirius Sports a trusted global name in
-              apparel, where quality meets style. From everyday essentials like
-              socks and undergarments to performance-driven sportswear, we ensure
-              every piece is designed to provide comfort, confidence, and
-              long-lasting value.
+              Sirius Sports delivers precision-crafted, athlete-tested apparel
+              that blends performance, modern design, and sustainable innovation
+              built to fit perfectly, perform relentlessly, and inspire
+              confidence worldwide.
             </p>
           </div>
           <WhySiriusSports />
