@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import {useEffect, useState} from 'react';
+import Image from 'next/image';
+import { logoDataUri } from '@/lib/logo';
 
 export function Footer() {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -17,6 +19,7 @@ export function Footer() {
           {/* Brand Block */}
           <div className="col-span-1 md:col-span-1">
             <Link href="/" className="mb-4 flex items-center gap-2">
+              <Image src={logoDataUri} alt="Sirius Sports Logo" width={32} height={32} />
               <span className="text-xl font-bold">Sirius Sports</span>
             </Link>
             <p className="max-w-xs text-sm text-muted-foreground">
