@@ -32,7 +32,7 @@ export function Navbar() {
           className="flex items-center gap-2 transition-opacity hover:opacity-80"
           aria-label="Sirius Sports home page"
         >
-          <span className="text-xl font-bold">Sirius Sports</span>
+          <span className="text-xl font-bold text-foreground">Sirius Sports</span>
         </Link>
 
         <div className="hidden items-center justify-center gap-8 md:flex">
