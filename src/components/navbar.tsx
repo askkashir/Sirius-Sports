@@ -29,10 +29,12 @@ export function Navbar() {
       <div className="container mx-auto flex h-20 max-w-[1200px] items-center justify-between px-4">
         <Link
           href="/"
-          className="flex items-center gap-2 transition-opacity hover:opacity-80"
+          className="flex items-center gap-2 text-foreground transition-opacity hover:opacity-80"
           aria-label="Sirius Sports home page"
         >
-          <span className="text-xl font-bold text-foreground">Sirius Sports</span>
+          <span className="text-xl font-bold" style={{ color: 'currentColor' }}>
+            Sirius Sports
+          </span>
         </Link>
 
         <div className="hidden items-center justify-center gap-8 md:flex">

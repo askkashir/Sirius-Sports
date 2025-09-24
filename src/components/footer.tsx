@@ -17,7 +17,7 @@ export function Footer() {
           {/* Brand Block */}
           <div className="col-span-1 md:col-span-1">
             <Link href="/" className="mb-4 flex items-center gap-2">
-              <span className="text-xl font-bold text-foreground">Sirius Sports</span>
+              <span className="text-xl font-bold text-foreground" style={{ color: 'currentColor' }}>Sirius Sports</span>
             </Link>
             <p className="max-w-xs text-sm text-muted-foreground">
               A Pakistan-based apparel manufacturer and exporter, dedicated to
