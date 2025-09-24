@@ -1,8 +1,8 @@
 'use client';
 
-import {Mountain} from 'lucide-react';
 import Link from 'next/link';
 import {useEffect, useState} from 'react';
+import { SiriusLogo } from './sirius-logo';
 
 export function Footer() {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -18,7 +18,7 @@ export function Footer() {
           {/* Brand Block */}
           <div className="col-span-1 md:col-span-1">
             <Link href="/" className="mb-4 flex items-center gap-2">
-              <Mountain className="h-8 w-8 text-primary" />
+              <SiriusLogo />
             </Link>
             <p className="max-w-xs text-sm text-muted-foreground">
               A Pakistan-based apparel manufacturer and exporter, dedicated to

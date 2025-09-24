@@ -1,11 +1,12 @@
 'use client';
 import {useEffect, useState} from 'react';
 import Link from 'next/link';
-import {Menu, X, Mountain} from 'lucide-react';
+import {Menu, X} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {navigationLinks} from '@/lib/navigation';
 import {cn} from '@/lib/utils';
 import {ThemeToggle} from './theme-toggle';
+import { SiriusLogo } from './sirius-logo';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,7 +33,7 @@ export function Navbar() {
           className="flex items-center gap-2 transition-opacity hover:opacity-80"
           aria-label="Sirius Sports home page"
         >
-          <Mountain className="h-8 w-8 text-primary" />
+          <SiriusLogo />
           <span className="text-xl font-bold">Sirius Sports</span>
         </Link>
 
