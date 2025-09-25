@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import {useEffect, useState} from 'react';
+import { SiriusLogo } from './sirius-logo';
 
 export function Footer() {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -16,8 +17,9 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
           {/* Brand Block */}
           <div className="col-span-1 md:col-span-1">
-            <Link href="/" className="mb-4 flex items-center gap-2">
-              <span className="text-xl font-bold text-foreground" style={{ color: 'currentColor' }}>Sirius Sports</span>
+            <Link href="/" className="mb-4 flex items-center gap-2 text-foreground">
+              <SiriusLogo className="h-6 w-6" />
+              <span className="text-xl font-bold">Sirius Sports</span>
             </Link>
             <p className="max-w-xs text-sm text-muted-foreground">
               A Pakistan-based apparel manufacturer and exporter, dedicated to

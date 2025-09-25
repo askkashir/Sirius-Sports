@@ -1372,14 +1372,6 @@ html {
   fill: currentColor;
 }
 
-.fill-destructive {
-  fill: hsl(var(--destructive));
-}
-
-.fill-foreground {
-  fill: hsl(var(--foreground));
-}
-
 .object-cover {
   object-fit: cover;
 }

@@ -6,6 +6,7 @@ import {Button} from '@/components/ui/button';
 import {navigationLinks} from '@/lib/navigation';
 import {cn} from '@/lib/utils';
 import {ThemeToggle} from './theme-toggle';
+import { SiriusLogo } from './sirius-logo';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,7 +33,8 @@ export function Navbar() {
           className="flex items-center gap-2 text-foreground transition-opacity hover:opacity-80"
           aria-label="Sirius Sports home page"
         >
-          <span className="text-xl font-bold" style={{ color: 'currentColor' }}>
+          <SiriusLogo className="h-6 w-6" />
+          <span className="text-xl font-bold">
             Sirius Sports
           </span>
         </Link>
