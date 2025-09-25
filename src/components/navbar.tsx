@@ -23,14 +23,14 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-colors duration-300',
+        'fixed top-0 left-0 right-0 z-[100] transition-colors duration-300',
         isScrolled ? 'bg-background/80 backdrop-blur-sm' : 'bg-transparent'
       )}
     >
       <div className="container mx-auto flex h-20 max-w-[1200px] items-center justify-between px-4">
         <Link
           href="/"
-          className="flex items-center gap-2 text-foreground transition-opacity hover:opacity-80"
+          className="relative z-[101] flex items-center gap-2 text-foreground transition-opacity hover:opacity-80"
           aria-label="Sirius Sports home page"
         >
           <Image src="/logo.png" alt="Sirius Sports Logo" width={32} height={32} />
