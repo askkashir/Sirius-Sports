@@ -87,7 +87,7 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="transition-colors hover:text-primary">
+                <a href="https://www.linkedin.com/in/ali-hassan-135190385?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-primary">
                   LinkedIn
                 </a>
               </li>
