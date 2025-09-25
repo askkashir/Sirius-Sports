@@ -33,22 +33,22 @@ export function Footer() {
             <h3 className="mb-4 font-bold uppercase">Collections</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="#" className="transition-colors hover:text-primary">
+                <Link href="/products/sportswear" className="transition-colors hover:text-primary">
                   Elite Performance
                 </Link>
               </li>
               <li>
-                <Link href="#" className="transition-colors hover:text-primary">
+                <Link href="/products/gym-wear" className="transition-colors hover:text-primary">
                   Training Gear
                 </Link>
               </li>
               <li>
-                <Link href="#" className="transition-colors hover:text-primary">
+                <Link href="/products/sportswear" className="transition-colors hover:text-primary">
                   Competition Wear
                 </Link>
               </li>
               <li>
-                <Link href="#" className="transition-colors hover:text-primary">
+                <Link href="/products/sportswear" className="transition-colors hover:text-primary">
                   Team Uniforms
                 </Link>
               </li>
@@ -65,7 +65,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="transition-colors hover:text-primary">
+                <Link href="/contact" className="transition-colors hover:text-primary">
                   Contact
                 </Link>
               </li>
@@ -82,7 +82,7 @@ export function Footer() {
             <h3 className="mb-4 font-bold uppercase">Connect</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="#" className="transition-colors hover:text-primary">
+                <a href="https://www.instagram.com/sirius_sports_?igsh=bmo5YzhlZjU1MmZn" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-primary">
                   Instagram
                 </a>
               </li>
@@ -92,12 +92,12 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="transition-colors hover:text-primary">
+                <a href="https://www.facebook.com/share/1akxgLPHfR/" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-primary">
                   Facebook
                 </a>
               </li>
               <li>
-                <a href="#" className="transition-colors hover:text-primary">
+                <a href="https://wa.me/923177245991" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-primary">
                   WhatsApp
                 </a>
               </li>
